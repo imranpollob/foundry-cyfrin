@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 contract SimpleStorage {
-    address owner;
+    uint myNumber;
     struct Person {
         string name;
         uint age;
@@ -10,12 +10,12 @@ contract SimpleStorage {
     Person[] public listOfPeople;
     mapping(address => int) public addressOfPeople;
 
-    function setOwner(address _addr) public {
-        owner = _addr;
+    function setMyNumber(uint _num) public {
+        myNumber = _num;
     }
 
-    function getOwner() public view returns (address) {
-        return owner;
+    function getMyNumber() public view returns (uint) {
+        return myNumber;
     }
 
     function addPerson(string memory _name, uint _age) public {
