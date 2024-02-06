@@ -25,6 +25,8 @@ anvil
 forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ### Cast
 cast <subcommand>
+### Remapping
+forge remappings > remappings.txt
 ```
 
 
@@ -32,5 +34,11 @@ cast <subcommand>
 
 - Create project `forge init`
 - Build the project `forge build`
-- Add anvil network to metamask `anvil`
-- Deploy contract `forge create Counter --private-key KEY`
+- Add anvil network and account to metamask `anvil`
+- Write the SimpleStorage.sol
+- Deploy contract `forge create SimpleStorage --private-key KEY`
+- Remove private key from your history in Bash `history -c`
+- Write deployment script SimpleStorage.s.sol
+- Run the script `forge script script/SimpleStorage.s.sol`
+- Running anvil isn't required to run script files
+- 
