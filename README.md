@@ -38,6 +38,8 @@ forge remappings > remappings.txt
 - Write the SimpleStorage.sol
 - Deploy contract `forge create SimpleStorage --private-key KEY`
 - Remove private key from your history in Bash `history -c`. Others `rm .bash_history .zsh_history`
+
+Deploying using script
 - Write deployment script SimpleStorage.s.sol
 - Run the script `forge script script/SimpleStorage.s.sol`
 - Deploying on anvil `forge script script/SimpleStorage.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --private-key KEY` 
@@ -46,9 +48,9 @@ forge remappings > remappings.txt
 - To convert a hex to decimal like "gas": "0x6b0d2", run `cast to-dec 0x6b0d2`
 - Don't use .env to store private key, use `cast wallet import the-key --interactive`
 - See the private keys `cast wallet list`
-- New script command `forge script script/SimpleStorage.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --account KEY_NAME --sender KEY_ADDRESS -vvvv`
+- New script command `forge script script/SimpleStorage.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --account KEY_NAME --sender ACCOUNT_ADDRESS -vvvv`
 
 Interect with the smart contract using cast 
 - setMyNumber `cast send CONTRACT_ADDRESS "setMyNumber(uint256)" 12345 --rpc-url http://127.0.0.1:8545 --private-key KEY`
-- getMyNumber `cast call 0xa513E6E4b8f2a923D98304ec87F64353C4D5C853 "getMyNumber()"`
+- getMyNumber `cast call CONTRACT_ADDRESS "getMyNumber()" --rpc-url http://127.0.0.1:8545`
 - Convert the hex to decimal `cast to-dec HEX_CODE`
