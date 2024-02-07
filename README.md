@@ -63,3 +63,8 @@ Test
 
 Calldata vs Memory
 - Memory variables are modifiable, calldata variables are not.
+
+Inheritence
+- To make a method overrideable make it `virtual`
+- A contract can inherite another using `is` operator
+- Add `override` modifier to the child contract method

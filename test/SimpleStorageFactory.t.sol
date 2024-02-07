@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.20;
 
-import {SimpleStorage} from "../src/SimpleStorage.sol";
+import {SimpleStorageHelper} from "../src/SimpleStorageHelper.sol";
 import {SimpleStorageFactory} from "../src/SimpleStorageFactory.sol";
 import {Test} from "forge-std/Test.sol";
 
@@ -18,6 +18,22 @@ contract SimpleStorageFactoryTest is Test {
         simpleStorageFactory.setMyNumberFromContractIndex(index, number);
         assert(
             simpleStorageFactory.getMyNumberFromContractIndex(index) == number
+        );
+    }
+
+    function testSetMyNumberHelper() public {
+        simpleStorageFactory.useHelperToCreateSimpleStorageContract();
+        uint index = 0;
+        uint number = 5;
+        simpleStorageFactory.setMyNumberFromContractIndex(index, number);
+
+        // using the helper to generate new number
+        SimpleStorageHelper simpleStorageHelper = new SimpleStorageHelper();
+        simpleStorageHelper.setMyNumber(number);
+
+        assert(
+            simpleStorageFactory.getMyNumberFromContractIndex(index) ==
+                simpleStorageHelper.getMyNumber()
         );
     }
 }

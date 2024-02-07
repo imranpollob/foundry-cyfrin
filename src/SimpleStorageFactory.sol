@@ -2,6 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {SimpleStorage} from "./SimpleStorage.sol";
+import {SimpleStorageHelper} from "./SimpleStorageHelper.sol";
 
 contract SimpleStorageFactory {
     SimpleStorage[] collectionOfSimpleStorages;
@@ -18,5 +19,9 @@ contract SimpleStorageFactory {
 
     function setMyNumberFromContractIndex(uint index, uint number) public {
         collectionOfSimpleStorages[index].setMyNumber(number);
+    }
+
+    function useHelperToCreateSimpleStorageContract() public {
+        collectionOfSimpleStorages.push(new SimpleStorageHelper());
     }
 }

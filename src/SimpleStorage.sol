@@ -9,7 +9,8 @@ contract SimpleStorage {
     }
     Person[] public listOfPeople;
 
-    function setMyNumber(uint _num) public {
+    // Note making it virtual to become overridable
+    function setMyNumber(uint _num) public virtual {
         myNumber = _num;
     }
 
