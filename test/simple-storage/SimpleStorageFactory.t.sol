@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.20;
 
-import {SimpleStorageHelper} from "../src/SimpleStorageHelper.sol";
-import {SimpleStorageFactory} from "../src/SimpleStorageFactory.sol";
+import {SimpleStorageHelper} from "../../src/simple-storage/SimpleStorageHelper.sol";
+import {SimpleStorageFactory} from "../../src/simple-storage/SimpleStorageFactory.sol";
 import {Test} from "forge-std/Test.sol";
 
 contract SimpleStorageFactoryTest is Test {

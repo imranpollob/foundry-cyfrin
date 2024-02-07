@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
-import {SimpleStorage} from "../src/SimpleStorage.sol";
+import {SimpleStorage} from "../../src/simple-storage/SimpleStorage.sol";
 
 // Note the contract name is different
 contract SimpleStorageScript is Script {
