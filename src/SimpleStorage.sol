@@ -8,7 +8,6 @@ contract SimpleStorage {
         uint age;
     }
     Person[] public listOfPeople;
-    mapping(address => int) public addressOfPeople;
 
     function setMyNumber(uint _num) public {
         myNumber = _num;

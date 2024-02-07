@@ -35,12 +35,12 @@ forge remappings > remappings.txt
 - Create project `forge init`
 - Build the project `forge build`
 - Add anvil network and account to metamask `anvil`
-- Write the SimpleStorage.sol
+- Write the `SimpleStorage.sol`
 - Deploy contract `forge create SimpleStorage --private-key KEY`
 - Remove private key from your history in Bash `history -c`. Others `rm .bash_history .zsh_history`
 
 Deploying using script
-- Write deployment script SimpleStorage.s.sol
+- Write deployment script `SimpleStorage.s.sol`. It should inherite `Script` from `forge-std/Script.sol` and have `setUp()` and `run()` functions
 - Run the script `forge script script/SimpleStorage.s.sol`
 - Deploying on anvil `forge script script/SimpleStorage.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --private-key KEY` 
 - A new broadcast folder will be created. Check run-latest.json file
@@ -54,3 +54,9 @@ Interect with the smart contract using cast
 - setMyNumber `cast send CONTRACT_ADDRESS "setMyNumber(uint256)" 12345 --rpc-url http://127.0.0.1:8545 --private-key KEY`
 - getMyNumber `cast call CONTRACT_ADDRESS "getMyNumber()" --rpc-url http://127.0.0.1:8545`
 - Convert the hex to decimal `cast to-dec HEX_CODE`
+
+Test
+- Write a test script `SimpleStorage.t.sol`. It should inherite `Test` from `forge-std/Test.sol` and have `setUp()` and `testMETHOD()` functions
+- Run test `forge test -vvvv`
+- Run a specific test function `forge test --match-test REGEX`
+- Run a specific contract `forge test --match-contract REGEX`
