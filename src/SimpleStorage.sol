@@ -17,6 +17,7 @@ contract SimpleStorage {
         return myNumber;
     }
 
+    // Note memory variables are modifiable, calldata variables are not.
     function addPerson(string memory _name, uint _age) public {
         listOfPeople.push(Person(_name, _age));
     }

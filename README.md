@@ -60,3 +60,6 @@ Test
 - Run test `forge test -vvvv`
 - Run a specific test function `forge test --match-test REGEX`
 - Run a specific contract `forge test --match-contract REGEX`
+
+Calldata vs Memory
+- Memory variables are modifiable, calldata variables are not.
