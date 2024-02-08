@@ -68,3 +68,13 @@ Inheritence
 - To make a method overrideable make it `virtual`
 - A contract can inherite another using `is` operator
 - Add `override` modifier to the child contract method
+
+Transfer vs Send vs Call
+| Feature          | send                                  | transfer                            | call                                      |
+|------------------|---------------------------------------|-------------------------------------|-------------------------------------------|
+| **Syntax**       | `address.send(uint256 amount) returns (bool)` | `address.transfer(uint256 amount)` | `address.call{value: uint256}(bytes memory data) returns (bool, bytes memory)` |
+| **Gas Limit**    | 2300 (only for logging)               | 2300 (only for logging)             | All available gas or a specific amount    |
+| **Error Handling** | Returns `false` on failure           | Throws an exception on failure      | Returns a boolean value and allows access to returned data |
+| **Use Case**     | Low-level method for sending Ether, requires explicit failure handling | Automatically reverts on failure, used for simple Ether transfers | Flexible method for sending Ether and calling functions on contracts, requires explicit error handling |
+| **Security**     | Safer against reentrancy attacks due to gas limit | Safer against reentrancy attacks due to automatic revert on failure | Requires careful error handling to avoid security pitfalls like reentrancy attacks |
+
