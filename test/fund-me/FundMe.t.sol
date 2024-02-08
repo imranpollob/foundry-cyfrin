@@ -37,4 +37,26 @@ contract FundMeTest is Test {
         vm.expectRevert(NotOwner.selector);
         fundMe.withdraw();
     }
+
+    function testWithdrawWithOwner() public {
+        vm.startPrank(USER);
+        fundMe.fund{value: SENT_AMOUNT}();
+        vm.stopPrank();
+
+        uint prevContractBalance = address(fundMe).balance;
+        uint prevOwnerBalance = address(this).balance;
+
+        console.log(prevContractBalance, prevOwnerBalance);
+
+        fundMe.withdraw();
+
+        assert(
+            prevContractBalance + prevOwnerBalance ==
+                address(fundMe).balance + address(this).balance
+        );
+
+        console.log(address(fundMe).balance, address(this).balance);
+    }
+
+    receive() external payable {}
 }
