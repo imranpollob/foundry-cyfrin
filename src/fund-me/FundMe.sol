@@ -1,57 +1,70 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
-import {console} from "forge-std/Script.sol";
-error NotOwner();
 
+import "./PriceConversion.sol";
+
+error FundMe_OnlyOwnerCanWithdrawTheFund();
+
+// Deployed Sepolia 0x6EcadFa3F430330a54F9eb6598a0D2a86ECC7A0B
 contract FundMe {
-    mapping(address => uint) public addressToAmountFunded;
+    // using library
+    using PriceConversion for uint;
+
+    uint256 public constant MINIMUM_USD = 5e18; // 5 dollars
+    // call gas cost from contracts
+    // gas * gas price = total cost / eth price = dollar price 
+    // non-constant 2424 * 7000000000 = 16,968,000,000,000 = 0.055
+    // constant     325 * 7000000000  =  2,275,000,000,000 = 0.0073
     address[] public funders;
-    address public immutable owner;
-    uint public constant MINIMUM_AMOUNT = 1 * 10 ** 18;
+    mapping (address funder => uint amount) public funderToAmountFunded;
+    address public immutable i_owner;
 
     constructor() {
-        owner = msg.sender;
-    }
-
-    modifier onlyOwner() {
-        if (msg.sender != owner) {
-            revert NotOwner();
-        }
-        _;
+        i_owner = msg.sender;
     }
 
     function fund() public payable {
-        require(msg.value >= MINIMUM_AMOUNT, "Not enough ETH sent");
-        addressToAmountFunded[msg.sender] += msg.value;
+        require(msg.value.getCoversionRate() > MINIMUM_USD, "Didn't send enough ETH");
         funders.push(msg.sender);
+        funderToAmountFunded[msg.sender] = funderToAmountFunded[msg.sender] + msg.value;
     }
 
     function withdraw() public onlyOwner {
-        for (uint i = 0; i < funders.length; i++) {
-            addressToAmountFunded[funders[i]] = 0;
+        // this for loop is used to manually set the amount of mapping funderToAmountFunded as
+        // in solidity it's not possible to reset a mapping
+        // it's one of the main reason to have an array to track the size of mapping
+        for (uint i; i < funders.length; i++) {
+            address funder = funders[i];
+            funderToAmountFunded[funder] = 0;
         }
-        console.log("sender address", address(msg.sender));
-        // reset funders array
+        
+        // resetting the array
         funders = new address[](0);
-
-        // transfer
+        
+        // transfer 
         // payable(msg.sender).transfer(address(this).balance);
-
+        
         // send
-        // bool success = payable(msg.sender).send(address(this).balance);
-        // require(success, "Send failed");
-
-        // call
-        (bool success, ) = payable(owner).call{value: address(this).balance}("");
-        require(success, "Call failed");
+        // bool sendSuccess = payable(msg.sender).send(address(this).balance);
+        // require(sendSuccess, "Send failed");
+        
+        // call 
+        // (bool callSuccess, bytes memory dataReturned)
+        (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
+        require(callSuccess, "Call failed");
     }
 
-    // msg.data ? receive() : fallback()
+    modifier onlyOwner() {
+        if (msg.sender != i_owner) revert FundMe_OnlyOwnerCanWithdrawTheFund();
+        // require(msg.sender == i_owner, "Only owner can withdraw the fund");
+        _;
+    }
+
     receive() external payable {
         fund();
     }
 
-    fallback() external payable {
+    fallback() external payable { 
         fund();
     }
 }

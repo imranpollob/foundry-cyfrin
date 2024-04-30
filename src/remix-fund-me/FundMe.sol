@@ -7,7 +7,9 @@ error FundMe_OnlyOwnerCanWithdrawTheFund();
 
 // Deployed Sepolia 0x6EcadFa3F430330a54F9eb6598a0D2a86ECC7A0B
 contract FundMe {
+    // using library
     using PriceConversion for uint;
+
     uint256 public constant MINIMUM_USD = 5e18; // 5 dollars
     // call gas cost from contracts
     // gas * gas price = total cost / eth price = dollar price 
@@ -53,7 +55,7 @@ contract FundMe {
     }
 
     modifier onlyOwner() {
-        if (msg.sender != i_owner) revert OnlyOwnerCanWithdrawTheFund();
+        if (msg.sender != i_owner) revert FundMe_OnlyOwnerCanWithdrawTheFund();
         // require(msg.sender == i_owner, "Only owner can withdraw the fund");
         _;
     }
