@@ -3,8 +3,9 @@ pragma solidity ^0.8.20;
 
 import "./PriceConversion.sol";
 
-error OnlyOwnerCanWithdrawTheFund();
+error FundMe_OnlyOwnerCanWithdrawTheFund();
 
+// Deployed Sepolia 0x6EcadFa3F430330a54F9eb6598a0D2a86ECC7A0B
 contract FundMe {
     using PriceConversion for uint;
     uint256 public constant MINIMUM_USD = 5e18; // 5 dollars

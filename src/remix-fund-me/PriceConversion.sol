@@ -6,6 +6,7 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 // check the function visibility is internal
 library PriceConversion {
     function getPrice() internal view returns (uint) {
+        // Sepolia ETH->USD
         AggregatorV3Interface priceFeed = AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
         (, int256 price,,,) = priceFeed.latestRoundData();
         return uint(price) * 1e10; // chainlink return result having 8 decimals. So multiplying with 10 to get a 18 decimal number. 
