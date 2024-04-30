@@ -5,22 +5,23 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/Ag
 
 // check the function visibility is internal
 library PriceConversion {
-    function getPrice() internal view returns (uint) {
-        // Sepolia ETH->USD
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
-        (, int256 price,,,) = priceFeed.latestRoundData();
-        return uint(price) * 1e10; // chainlink return result having 8 decimals. So multiplying with 10 to get a 18 decimal number. 
+    function getPrice(
+        AggregatorV3Interface priceFeed
+    ) internal view returns (uint) {
+        (, int256 price, , , ) = priceFeed.latestRoundData();
+        return uint(price) * 1e10;
+        // chainlink return result having 8 decimals.
+        // So multiplying with 10 to get a 18 decimal number.
         // 3233_044,701,920,000,000,000
     }
 
-    function getCoversionRate(uint ethAmount) internal view returns (uint) {
+    function getCoversionRate(
+        uint ethAmount,
+        AggregatorV3Interface priceFeed
+    ) internal view returns (uint) {
         // here ethAmount is e18. So multiplying it with e18 price will create a e36 number.
         // finally dividing it by e18 will give us a e18 number.
-        uint ethPrice = getPrice();
+        uint ethPrice = getPrice(priceFeed);
         return (ethPrice * ethAmount) / 1e18;
-    }
-
-    function getVersion() internal view returns (uint256) {
-        return AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306).version();
     }
 }
