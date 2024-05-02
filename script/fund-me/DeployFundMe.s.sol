@@ -8,6 +8,7 @@ import {HelperConfig} from "./HelperConfig.sol";
 contract DeployFundMe is Script {
     // forge script script/fund-me/DeployFundMe.s.sol
     function run() external returns (FundMe) {
+        // this config is getting the network based pricefeed address
         HelperConfig helperConfig = new HelperConfig();
         address priceFeed = helperConfig.activeNetworkConfig();
 
