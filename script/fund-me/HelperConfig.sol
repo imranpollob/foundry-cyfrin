@@ -5,6 +5,9 @@ import {Script} from "forge-std/Script.sol";
 import {MockV3Aggregator} from "./../../test/fund-me/mock/MockV3Aggregator.sol";
 
 contract HelperConfig is Script {
+    uint8 public constant DECIMALS = 8;
+    int256 public constant INITIAL_PRICE = 3200e8;
+
     struct NetworkConfig {
         address priceFeed;
     }
@@ -17,7 +20,7 @@ contract HelperConfig is Script {
         } else if (block.chainid == 80002) {
             activeNetworkConfig = getAmoyConfig();
         } else {
-            activeNetworkConfig = getAnvilConfig();
+            activeNetworkConfig = getOrCreateAnvilConfig();
         }
     }
 
@@ -35,9 +38,17 @@ contract HelperConfig is Script {
             });
     }
 
-    function getAnvilConfig() public returns (NetworkConfig memory) {
+    function getOrCreateAnvilConfig() public returns (NetworkConfig memory) {
+        // if priceFeed is not set, then create a mock price feed
+        if (activeNetworkConfig.priceFeed != address(0)) {
+            return activeNetworkConfig;
+        }
+
         vm.startBroadcast();
-        MockV3Aggregator mockPriceFeed = new MockV3Aggregator(8, 3200e8);
+        MockV3Aggregator mockPriceFeed = new MockV3Aggregator(
+            DECIMALS,
+            INITIAL_PRICE
+        );
         vm.stopBroadcast();
 
         return NetworkConfig({priceFeed: address(mockPriceFeed)});
