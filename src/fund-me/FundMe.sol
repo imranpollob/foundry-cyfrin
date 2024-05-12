@@ -61,14 +61,35 @@ contract FundMe {
         s_funderToAmountFunded[msg.sender] += msg.value;
     }
 
+    // gas: 87,388
     function withdraw() public onlyOwner {
-        // saving gas by copying s_funders to memory
-        address[] memory funders = s_funders;
         // this for loop is used to manually set the amount of mapping s_funderToAmountFunded as
         // in solidity it's not possible to reset a mapping
         // it's one of the main reason to have an array to track the size of mapping
         // ** mappings can't be in memory
-        for (uint i; i < funders.length; i++) {
+        for (uint i; i < s_funders.length; i++) {
+            address funder = s_funders[i];
+            s_funderToAmountFunded[funder] = 0;
+        }
+
+        // resetting the array
+        s_funders = new address[](0);
+
+        // (bool callSuccess, bytes memory dataReturned)
+        (bool callSuccess, ) = payable(i_owner).call{
+            value: address(this).balance
+        }("");
+        require(callSuccess, "Call failed");
+    }
+
+    // forge snapshot --match-contract FundMe
+    // gas: 84,594 after using in memory funders
+    // gas: 84,448 after using fundersLength variable
+    function withdrawCheaper() public onlyOwner {
+        uint fundersLength = s_funders.length;
+        address[] memory funders = s_funders;
+
+        for (uint i; i < fundersLength; i++) {
             address funder = funders[i];
             s_funderToAmountFunded[funder] = 0;
         }
