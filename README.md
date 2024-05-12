@@ -41,6 +41,8 @@ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --priva
 cast <subcommand>
 ### Remapping
 forge remappings > remappings.txt
+### Test chain
+anvil
 ```
 
 

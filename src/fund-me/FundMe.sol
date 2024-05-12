@@ -6,6 +6,7 @@ import "./PriceConversion.sol";
 
 error FundMe_OnlyOwnerCanWithdrawTheFund();
 
+// forge inspect FundMe storageLayout
 contract FundMe {
     // using library
     using PriceConversion for uint;
