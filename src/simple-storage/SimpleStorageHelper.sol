@@ -6,7 +6,7 @@ import {SimpleStorage} from "./SimpleStorage.sol";
 // Inheriheted SimpleStorage
 contract SimpleStorageHelper is SimpleStorage {
     // override the virtual method
-    function setMyNumber(uint _num) public override {
+    function setMyNumber(uint256 _num) public override {
         myNumber = _num + 5;
     }
 }

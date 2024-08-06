@@ -1,17 +1,45 @@
 # Foundry Projects
-This repositiry contains the projects from [Cyfrin Foundry Course](https://github.com/Cyfrin/foundry-full-course-f23)
 
-## Projects
-1. [x] Simple Storage
-2. [ ] Fund me 
-3. [ ] Fund me frontend
-4. [ ] Lottery
-5. [ ] ERC20
-6. [ ] NFT
-7. [ ] Stable Coin
-8. [ ] Ungradeable Smart contract
-9. [ ] DAO
-10. [ ] Security
+Resources:
+- https://github.com/Cyfrin/foundry-full-course-f23
+- https://github.com/Cyfrin/security-and-auditing-full-course-s23
+
+
+## Foudry Fundamentals and Advanced Foundry
+1.  [x] 🔧 **Foundry Fundamentals Section 1:** Foundry Simple Storage
+2.  [ ] 💰 **Foundry Fundamentals Section 2:** Foundry Fund Me
+3.  [ ] 🌐 **Foundry Fundamentals Section 3:** Html/Js Fund Me (Quick Fullstack / Front End Tutorial)
+4.  [ ] 🎲 **Foundry Fundamentals Section 4:** Foundry Smart Contract Lottery
+5.  [ ] 🪙 **Advanced Foundry Section 1:** Foundry ERC20s
+6.  [ ] 🎨 **Advanced Foundry Section 2:** Foundry NFTs | MoodNFT
+7.  [ ] 💸 **Advanced Foundry Section 3:** Foundry DeFi | Stablecoin (The PINNACLE PROJECT!! GET HERE!)
+8.  [ ] 🎁 **Advanced Foundry Section 4:** Foundry Merkle Airdrop and Signatures
+9.  [ ] 🚀 **Advanced Foundry Section 5:** Foundry Upgrades
+10. [ ] 🛠️ **Advanced Foundry Section 6:** Foundry Account Abstraction
+11. [ ] 🗳️ **Advanced Foundry Section 7:** Foundry DAO / Governance
+12. [ ] 🔐 **Advanced Foundry Section 8:** Smart Contract Security & Auditing (For developers)
+
+
+## Smart Contract Security Auditing
+0. [x] 🤗 Section 0: Welcome to the Course
+1. [ ] 🐸 Section 1: Review (Don't skip)
+2. [ ] ❓ Section 2: What is a smart contract audit (Security Review)?
+3. [ ] ⛳️ Section 3: Your first audit | PasswordStore Audit
+4. [ ] 🐶 Section 4: Manual & Static Analysis | Puppy Raffle Audit
+5. [ ] 🔄 Section 5: Invariants & Intro to DeFi | TSwap Audit
+6. [ ] 🌩️ Section 6: Centralization, Proxies, and Oracles | Thunder Loan Audit
+7. [ ] 🌉 Section 7: Bridges, Chains, Signatures, Intro to Yul/Assembly | Bridge Boss Audit
+8. [ ] 🛡️ Section 8: (THE FINAL BOSS AUD**-IT) MEV, Nodes, & DAOs | Vault Guardians Audit
+
+
+## VSCode Configuration
+To use `forge fmt` as default formatter for solidity:
+- CTRL + SHIFT + P
+- Open User Settings (JSON)
+- Add this line `"solidity.formatter": "forge"`
+
+Used extensions
+- Solidity - Nomic Foundation
 
 
 ## Foundry intro

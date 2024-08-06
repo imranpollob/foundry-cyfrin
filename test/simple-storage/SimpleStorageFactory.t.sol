@@ -13,27 +13,22 @@ contract SimpleStorageFactoryTest is Test {
             simpleStorageFactory.createSimpleStorageContract();
         }
 
-        uint index = 2;
-        uint number = 5;
+        uint256 index = 2;
+        uint256 number = 5;
         simpleStorageFactory.setMyNumberFromContractIndex(index, number);
-        assert(
-            simpleStorageFactory.getMyNumberFromContractIndex(index) == number
-        );
+        assert(simpleStorageFactory.getMyNumberFromContractIndex(index) == number);
     }
 
     function testSetMyNumberHelper() public {
         simpleStorageFactory.useHelperToCreateSimpleStorageContract();
-        uint index = 0;
-        uint number = 5;
+        uint256 index = 0;
+        uint256 number = 5;
         simpleStorageFactory.setMyNumberFromContractIndex(index, number);
 
         // using the helper to generate new number
         SimpleStorageHelper simpleStorageHelper = new SimpleStorageHelper();
         simpleStorageHelper.setMyNumber(number);
 
-        assert(
-            simpleStorageFactory.getMyNumberFromContractIndex(index) ==
-                simpleStorageHelper.getMyNumber()
-        );
+        assert(simpleStorageFactory.getMyNumberFromContractIndex(index) == simpleStorageHelper.getMyNumber());
     }
 }

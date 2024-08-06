@@ -9,13 +9,13 @@ error FundMe_OnlyOwnerCanWithdrawTheFund();
 // forge inspect FundMe storageLayout
 contract FundMe {
     // using library
-    using PriceConversion for uint;
+    using PriceConversion for uint256;
 
     // State variables
     uint256 public constant MINIMUM_USD = 5e18; // 5 dollars
     address public immutable i_owner;
     address[] public s_funders;
-    mapping(address funder => uint amount) public s_funderToAmountFunded;
+    mapping(address funder => uint256 amount) public s_funderToAmountFunded;
     AggregatorV3Interface private s_priceFeed;
 
     // Events
@@ -98,9 +98,7 @@ contract FundMe {
         s_funders = new address[](0);
 
         // (bool callSuccess, bytes memory dataReturned)
-        (bool callSuccess, ) = payable(i_owner).call{
-            value: address(this).balance
-        }("");
+        (bool callSuccess,) = payable(i_owner).call{value: address(this).balance}("");
         require(callSuccess, "Call failed");
     }
 
@@ -120,9 +118,7 @@ contract FundMe {
         return s_funders[index];
     }
 
-    function getFunderToAmountFunded(
-        address funderAddress
-    ) public view returns (uint) {
+    function getFunderToAmountFunded(address funderAddress) public view returns (uint256) {
         return s_funderToAmountFunded[funderAddress];
     }
 }

@@ -11,13 +11,11 @@ contract SimpleStorageFactory {
         collectionOfSimpleStorages.push(new SimpleStorage());
     }
 
-    function getMyNumberFromContractIndex(
-        uint index
-    ) public view returns (uint) {
+    function getMyNumberFromContractIndex(uint256 index) public view returns (uint256) {
         return collectionOfSimpleStorages[index].getMyNumber();
     }
 
-    function setMyNumberFromContractIndex(uint index, uint number) public {
+    function setMyNumberFromContractIndex(uint256 index, uint256 number) public {
         collectionOfSimpleStorages[index].setMyNumber(number);
     }
 
