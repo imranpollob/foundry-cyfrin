@@ -7,7 +7,7 @@ Resources:
 
 ## Foudry Fundamentals and Advanced Foundry
 1.  [x] 🔧 **Foundry Fundamentals Section 1:** Foundry Simple Storage
-2.  [ ] 💰 **Foundry Fundamentals Section 2:** Foundry Fund Me
+2.  [x] 💰 **Foundry Fundamentals Section 2:** Foundry Fund Me
 3.  [ ] 🌐 **Foundry Fundamentals Section 3:** Html/Js Fund Me (Quick Fullstack / Front End Tutorial)
 4.  [ ] 🎲 **Foundry Fundamentals Section 4:** Foundry Smart Contract Lottery
 5.  [ ] 🪙 **Advanced Foundry Section 1:** Foundry ERC20s
