@@ -40,13 +40,13 @@ ifeq ($(findstring --network sepolia,$(ARGS)),--network sepolia)
 endif
 
 deploy:
-	@forge script script/DeployFundMe.s.sol:DeployFundMe $(NETWORK_ARGS)
+	@forge script script/fund-me/DeployFundMe.s.sol:DeployFundMe $(NETWORK_ARGS)
 
 # For deploying Interactions.s.sol:FundFundMe as well as for Interactions.s.sol:WithdrawFundMe we have to include a sender's address `--sender <ADDRESS>`
 SENDER_ADDRESS := <sender's address>
 
 fund:
-	@forge script script/Interactions.s.sol:FundFundMe --sender $(SENDER_ADDRESS) $(NETWORK_ARGS)
+	@forge script script/fund-me/Interactions.s.sol:Fund_FundMe --sender $(SENDER_ADDRESS) $(NETWORK_ARGS)
 
 withdraw:
-	@forge script script/Interactions.s.sol:WithdrawFundMe --sender $(SENDER_ADDRESS) $(NETWORK_ARGS)
+	@forge script script/fund-me/Interactions.s.sol:Withdraw_FundMe --sender $(SENDER_ADDRESS) $(NETWORK_ARGS)
