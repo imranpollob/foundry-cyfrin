@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {Script} from "forge-std/Script.sol";
-import {MockV3Aggregator} from "./../../test/fund-me/mock/MockV3Aggregator.sol";
+import {MockV3Aggregator} from "../test/mock/MockV3Aggregator.sol";
 
 contract HelperConfig is Script {
     uint8 public constant DECIMALS = 8;

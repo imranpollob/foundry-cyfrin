@@ -107,36 +107,6 @@ forge script script/DeployFundMe.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key 
 forge script script/DeployFundMe.s.sol --rpc-url $MAINNET_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify
 ```
 
-## 💡 Usage
-
-### Funding the Contract
-
-Send ETH to the contract address with a minimum value equivalent to 5 USD:
-
-```solidity
-// Contract automatically handles funding through receive/fallback
-fundMe.fund{value: 0.01 ether}();
-```
-
-### Withdrawing Funds (Owner Only)
-
-```solidity
-fundMe.withdraw();
-```
-
-### Checking Contract State
-
-```solidity
-// Get minimum USD requirement
-uint256 minUsd = fundMe.MINIMUM_USD();
-
-// Get funder amount
-uint256 amount = fundMe.s_funderToAmountFunded(funderAddress);
-
-// Get all funders
-address[] memory funders = fundMe.getFunders();
-```
-
 ## 🔧 Development
 
 ### Code Formatting

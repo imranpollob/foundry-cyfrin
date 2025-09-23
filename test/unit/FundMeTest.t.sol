@@ -2,17 +2,17 @@
 pragma solidity ^0.8.20;
 
 import {Test, console} from "forge-std/Test.sol";
-import {FundMe} from "src/fund-me/FundMe.sol";
-import {DeployFundMe} from "script/fund-me/DeployFundMe.s.sol";
+import {FundMe} from "src/FundMe.sol";
+import {DeployFundMe} from "script/DeployFundMe.s.sol";
 
 // forge test --match-contract FundMeTest -vvv
 contract FundMeTest is Test {
     FundMe fundMe;
 
     address USER = makeAddr("user");
-    uint constant SEND_VALUE = 0.1 ether;
-    uint constant STARTING_BALANCE = 10 ether;
-    uint constant GAS_PRICE = 1;
+    uint256 constant SEND_VALUE = 0.1 ether;
+    uint256 constant STARTING_BALANCE = 10 ether;
+    uint256 constant GAS_PRICE = 1;
 
     function setUp() external {
         // fundMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306);
@@ -82,27 +82,25 @@ contract FundMeTest is Test {
         // Act
         // gas operations
         vm.txGasPrice(GAS_PRICE);
-        uint startingGas = gasleft();
+        uint256 startingGas = gasleft();
 
         vm.prank(fundMe.getOwner());
         fundMe.withdraw();
 
-        uint endingGas = gasleft();
+        uint256 endingGas = gasleft();
         console.log("Gas used: ", startingGas - endingGas);
 
         // Assert
-        uint endingOwnerBalance = fundMe.getOwner().balance;
-        uint endingFundMeBalance = address(fundMe).balance;
+        uint256 endingOwnerBalance = fundMe.getOwner().balance;
+        uint256 endingFundMeBalance = address(fundMe).balance;
         assert(endingFundMeBalance == 0);
-        assert(
-            startingOwnerBalance + startingFundMeBalance == endingOwnerBalance
-        );
+        assert(startingOwnerBalance + startingFundMeBalance == endingOwnerBalance);
     }
 
     function testWithdrawCheaperFromASingleFunder() public funded {
         // Arrange
-        uint startingOwnerBalance = fundMe.getOwner().balance;
-        uint startingFundMeBalance = address(fundMe).balance;
+        uint256 startingOwnerBalance = fundMe.getOwner().balance;
+        uint256 startingFundMeBalance = address(fundMe).balance;
 
         // Act
         vm.prank(fundMe.getOwner());
