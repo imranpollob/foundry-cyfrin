@@ -167,7 +167,7 @@ function App() {
               <div className="flex flex-col space-y-2">
                 {!isMetaMaskAvailable && (
                   <div className="text-yellow-600 text-sm bg-yellow-50 p-2 rounded">
-                    ⚠️ MetaMask not detected.{' '}
+                    ⚠️ No Web3 wallet detected.{' '}
                     <a
                       href="https://metamask.io/download/"
                       target="_blank"
@@ -176,18 +176,18 @@ function App() {
                     >
                       Install MetaMask
                     </a>{' '}
-                    to connect.
+                    or another Web3 wallet to connect.
                   </div>
                 )}
                 <div className="flex space-x-2">
-                  {connectors.map((connector) => (
+                  {connectors.slice(0, 1).map((connector) => (
                     <button
                       key={connector.uid}
                       onClick={() => connect({ connector })}
-                      disabled={isPending || !isMetaMaskAvailable}
+                      disabled={isPending}
                       className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors"
                     >
-                      {isPending ? 'Connecting...' : `Connect ${connector.name}`}
+                      {isPending ? 'Connecting...' : 'Connect Wallet'}
                     </button>
                   ))}
                 </div>

@@ -1,6 +1,6 @@
 import { http, createConfig } from 'wagmi'
 import { mainnet, sepolia, polygonAmoy } from 'wagmi/chains'
-import { metaMask, injected } from 'wagmi/connectors'
+import { injected } from 'wagmi/connectors'
 
 // Define local Anvil network
 const anvil = {
@@ -25,7 +25,6 @@ const anvil = {
 export const config = createConfig({
   chains: [mainnet, sepolia, polygonAmoy, anvil],
   connectors: [
-    metaMask(),
     injected(),
   ],
   transports: {
