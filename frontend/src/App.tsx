@@ -25,8 +25,8 @@ function App() {
 
   const contractAddress = contractAddresses[chainId as keyof typeof contractAddresses] || contractAddresses[11155111]
 
-  // Check if contract is deployed on current network
-  const isContractDeployed = contractAddress && !contractAddress.includes('YourDeployedContractAddress')
+  // Check if contract is deployed on current network (only when wallet is connected)
+  const isContractDeployed = isConnected && contractAddress && !contractAddress.includes('YourDeployedContractAddress')
 
   // Read contract data
   const { data: minimumUsd } = useReadContract({
@@ -441,44 +441,46 @@ function App() {
         )}
 
         {/* Network Information */}
-        <div className="animate-in fade-in duration-700 delay-300 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <span className="text-blue-400">🌐</span> Network Information
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="font-semibold">Current Network:</p>
-              <p className="text-gray-600">{currentChain?.name || 'Unknown'} (Chain ID: {chainId})</p>
-            </div>
-            <div>
-              <p className="font-semibold">Contract Address:</p>
-              <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
-                <span>{contractAddress}</span>
-                <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
-                {getAddressUrl(contractAddress) && (
-                  <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(contractAddress)}>
-                    View ↗
-                  </a>
+        {isConnected && (
+          <div className="animate-in fade-in duration-700 delay-300 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <span className="text-blue-400">🌐</span> Network Information
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="font-semibold">Current Network:</p>
+                <p className="text-gray-600">{currentChain?.name || 'Unknown'} (Chain ID: {chainId})</p>
+              </div>
+              <div>
+                <p className="font-semibold">Contract Address:</p>
+                <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
+                  <span>{contractAddress}</span>
+                  <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
+                  {getAddressUrl(contractAddress) && (
+                    <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(contractAddress)}>
+                      View ↗
+                    </a>
+                  )}
+                </div>
+                {!isContractDeployed && (
+                  <p className="text-red-400 text-xs mt-1">
+                    Contract not deployed - update contracts.ts with deployed address
+                  </p>
                 )}
               </div>
-              {!isContractDeployed && (
-                <p className="text-red-400 text-xs mt-1">
-                  Contract not deployed - update contracts.ts with deployed address
+            </div>
+            {!isContractDeployed && (
+              <div className="mt-4 p-3 bg-blue-50 rounded">
+                <p className="text-blue-400 text-sm">
+                  <strong>To deploy the contract:</strong><br />
+                  <strong>For local testing:</strong> Start Anvil (`anvil`) in terminal, then run `npm run deploy:local`<br />
+                  <strong>For Sepolia testnet:</strong> Set environment variables and run `npm run deploy:sepolia`<br />
+                  Then update the contract address in `src/contracts.ts`
                 </p>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-          {!isContractDeployed && (
-            <div className="mt-4 p-3 bg-blue-50 rounded">
-              <p className="text-blue-400 text-sm">
-                <strong>To deploy the contract:</strong><br />
-                <strong>For local testing:</strong> Start Anvil (`anvil`) in terminal, then run `npm run deploy:local`<br />
-                <strong>For Sepolia testnet:</strong> Set environment variables and run `npm run deploy:sepolia`<br />
-                Then update the contract address in `src/contracts.ts`
-              </p>
-            </div>
-          )}
-        </div>
+        )}
       </div>
     </div>
   )
