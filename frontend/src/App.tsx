@@ -301,7 +301,7 @@ function App() {
         </div>
 
         {/* Contract Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           <div className="animate-in slide-in-from-bottom-2 duration-700 delay-100 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
             <div className="flex items-center space-x-2 mb-2">
               <span className="text-green-400">💰</span>
@@ -341,31 +341,6 @@ function App() {
               {totalFunders ? totalFunders.toString() : '0'}
             </p>
           </div>
-
-          <div className="animate-in slide-in-from-bottom-2 duration-700 delay-600 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
-            <div className="flex items-center space-x-2 mb-2">
-              <span className="text-red-400">👑</span>
-              <h3 className="font-semibold">Contract Owner</h3>
-            </div>
-            <p className="text-sm font-bold text-red-400 font-mono">
-              {owner ? formatAddress(owner as string) : 'Loading...'}
-            </p>
-            {owner ? (
-              <div className="flex gap-1 mt-1">
-                <button
-                  className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
-                  onClick={() => owner && navigator.clipboard.writeText(owner as string)}
-                >
-                  Copy
-                </button>
-                {getAddressUrl(owner as string) && (
-                  <a className="text-xs text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(owner as string)}>
-                    View ↗
-                  </a>
-                )}
-              </div>
-            ) : null}
-          </div>
         </div>
 
         {/* Funding Section */}
@@ -377,8 +352,6 @@ function App() {
             {!isContractDeployed && (
               <div className="text-red-400 text-sm bg-red-50 p-3 rounded mb-4">
                 ⚠️ Contract not deployed on this network. Please deploy the contract first or switch to a supported network.
-                <br />
-                <strong>Current contract address:</strong> {contractAddress}
               </div>
             )}
             <div className="flex flex-col sm:flex-row gap-3">
@@ -471,7 +444,7 @@ function App() {
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
               <span className="text-blue-400">🌐</span> Network Information
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <p className="font-semibold">Current Network:</p>
                 <p className="text-gray-600">{currentChain?.name || 'Unknown'} (Chain ID: {chainId})</p>
@@ -479,7 +452,7 @@ function App() {
               <div>
                 <p className="font-semibold">Contract Address:</p>
                 <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
-                  <span>{contractAddress}</span>
+                  <span>{formatAddress(contractAddress)}</span>
                   <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
                   {getAddressUrl(contractAddress) && (
                     <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(contractAddress)}>
@@ -492,6 +465,18 @@ function App() {
                     Contract not deployed - update contracts.ts with deployed address
                   </p>
                 )}
+              </div>
+              <div>
+                <p className="font-semibold">Current Owner:</p>
+                <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
+                  <span>{owner ? formatAddress(owner as string) : 'Loading...'}</span>
+                  <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
+                  {getAddressUrl(contractAddress) && (
+                    <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(contractAddress)}>
+                      View ↗
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
             {!isContractDeployed && (
