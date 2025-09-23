@@ -63,6 +63,26 @@ contract FundMeTest is Test {
         assert(funder == USER);
     }
 
+    function testFundersArrayNoDuplicates() public {
+        // Fund once
+        vm.prank(USER);
+        fundMe.fund{value: SEND_VALUE}();
+
+        // Fund again with same address
+        vm.prank(USER);
+        fundMe.fund{value: SEND_VALUE}();
+
+        // Should still only have 1 funder
+        assert(fundMe.getTotalFunders() == 1);
+
+        // Should be the same address
+        address funder = fundMe.getFunder(0);
+        assert(funder == USER);
+
+        // Amount should be doubled
+        assert(fundMe.getFunderToAmountFunded(USER) == SEND_VALUE * 2);
+    }
+
     modifier funded() {
         vm.prank(USER);
         fundMe.fund{value: SEND_VALUE}();

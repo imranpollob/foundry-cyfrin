@@ -45,8 +45,6 @@ function App() {
     address: contractAddress,
   })
 
-  // We don't have total funders count in ABI; skipping misleading display
-
   const { data: userFundedAmount, refetch: refetchUserFundedAmount } = useReadContract({
     address: contractAddress,
     abi: fundMeAbi,
@@ -54,7 +52,7 @@ function App() {
     args: address ? [address] : undefined,
   })
 
-  const { data: totalFunders } = useReadContract({
+  const { data: totalFunders, refetch: refetchTotalFunders } = useReadContract({
     address: contractAddress,
     abi: fundMeAbi,
     functionName: 'getTotalFunders',
@@ -99,6 +97,7 @@ function App() {
       refetchContractBalance()
       refetchUserFundedAmount()
       refetchUserBalance()
+      refetchTotalFunders()
       setFundAmount('') // Clear the input field after successful funding
       showToast('success', 'Funding successful!')
     }
@@ -109,6 +108,7 @@ function App() {
       refetchContractBalance()
       refetchUserFundedAmount()
       refetchUserBalance()
+      refetchTotalFunders()
       showToast('success', 'Withdrawal successful!')
     }
   }, [withdrawReceipt.isSuccess])
@@ -217,7 +217,7 @@ function App() {
               {isConnected ? (
                 <button
                   onClick={() => disconnect()}
-                  className="bg-red-500 hover:bg-red-600 text-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md border border-gray-300"
+                  className="text-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md border border-gray-300"
                 >
                   Disconnect
                 </button>
@@ -233,7 +233,7 @@ function App() {
                       key={connector.uid}
                       onClick={() => connect({ connector })}
                       disabled={isPending}
-                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md border border-gray-300"
+                      className="disabled:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md border border-gray-300"
                     >
                       {isPending ? 'Connecting…' : 'Connect Wallet'}
                     </button>
@@ -290,7 +290,7 @@ function App() {
                   <button
                     onClick={() => selectedChainId && switchChain({ chainId: selectedChainId })}
                     disabled={isSwitching || selectedChainId === chainId}
-                    className="bg-gray-900 hover:bg-gray-800 disabled:bg-gray-600 text-gray-700 px-3 py-2 rounded-lg text-sm transition-colors shadow-sm hover:shadow-md border border-gray-300"
+                    className="disabled:bg-gray-600 text-gray-700 px-3 py-2 rounded-lg text-sm transition-colors shadow-sm hover:shadow-md border border-gray-300"
                   >
                     {isSwitching ? 'Switching…' : 'Switch'}
                   </button>
@@ -369,7 +369,7 @@ function App() {
               <button
                 onClick={handleFund}
                 disabled={isFunding || !fundAmount || !isContractDeployed}
-                className="bg-green-600 hover:bg-green-500 disabled:bg-gray-600 text-gray-700 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center justify-center gap-2 border border-gray-300"
+                className="text-gray-700 disabled:text-gray-400 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center justify-center gap-2 border border-gray-300"
               >
                 {isFunding && <span className="h-4 w-4 rounded-full border-2 border-white/60 border-t-transparent animate-spin" />}
                 {isFunding ? 'Funding…' : 'Fund'}

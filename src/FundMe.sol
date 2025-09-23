@@ -57,7 +57,12 @@ contract FundMe {
             msg.value.getCoversionRate(s_priceFeed) > MINIMUM_USD,
             "Didn't send enough ETH"
         );
-        s_funders.push(msg.sender);
+
+        // Only add funder to array if they haven't funded before
+        if (s_funderToAmountFunded[msg.sender] == 0) {
+            s_funders.push(msg.sender);
+        }
+
         s_funderToAmountFunded[msg.sender] += msg.value;
     }
 
