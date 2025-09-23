@@ -159,4 +159,42 @@ contract FundMeTest is Test {
             (numOfFunders + 1) * SEND_VALUE == endingOwnerBalance - startingOwnerBalance
         );
     }
+
+    function testTotalFunders() public {
+        address user1 = makeAddr("user1");
+        address user2 = makeAddr("user2");
+        address user3 = makeAddr("user3");
+
+        vm.deal(user1, STARTING_BALANCE);
+        vm.deal(user2, STARTING_BALANCE);
+        vm.deal(user3, STARTING_BALANCE);
+
+        vm.prank(user1);
+        fundMe.fund{value: SEND_VALUE}();
+
+        vm.prank(user2);
+        fundMe.fund{value: SEND_VALUE}();
+
+        vm.prank(user3);
+        fundMe.fund{value: SEND_VALUE}();
+
+        assert(fundMe.getTotalFunders() == 3);
+    }
+
+    function testOwnContribution() public {
+        address owner = fundMe.getOwner();
+        vm.deal(owner, STARTING_BALANCE);
+
+        vm.prank(owner);
+        fundMe.fund{value: SEND_VALUE}();
+
+        uint256 contribution = fundMe.getFunderToAmountFunded(owner);
+        assert(contribution == SEND_VALUE);
+    }
+
+    function testVerifyOwner() public view {
+        address owner = fundMe.getOwner();
+        assert(owner != address(0));
+        assert(owner == msg.sender);
+    }
 }

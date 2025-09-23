@@ -233,7 +233,7 @@ function App() {
                       key={connector.uid}
                       onClick={() => connect({ connector })}
                       disabled={isPending}
-                      className="disabled:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md border border-gray-300"
+                      className="disabled:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md border border-gray-300"
                     >
                       {isPending ? 'Connecting…' : 'Connect Wallet'}
                     </button>
@@ -290,7 +290,7 @@ function App() {
                   <button
                     onClick={() => selectedChainId && switchChain({ chainId: selectedChainId })}
                     disabled={isSwitching || selectedChainId === chainId}
-                    className="disabled:bg-gray-600 text-gray-700 px-3 py-2 rounded-lg text-sm transition-colors shadow-sm hover:shadow-md border border-gray-300"
+                    className="disabled:bg-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm transition-colors shadow-sm hover:shadow-md border border-gray-300"
                   >
                     {isSwitching ? 'Switching…' : 'Switch'}
                   </button>
@@ -301,7 +301,7 @@ function App() {
         </div>
 
         {/* Contract Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
           <div className="animate-in slide-in-from-bottom-2 duration-700 delay-100 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
             <div className="flex items-center space-x-2 mb-2">
               <span className="text-green-400">💰</span>
@@ -334,12 +334,37 @@ function App() {
 
           <div className="animate-in slide-in-from-bottom-2 duration-700 delay-500 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
             <div className="flex items-center space-x-2 mb-2">
-              <span className="text-purple-400">�</span>
+              <span className="text-purple-400">👥</span>
               <h3 className="font-semibold">Total Funders</h3>
             </div>
             <p className="text-2xl font-bold text-purple-400">
               {totalFunders ? totalFunders.toString() : '0'}
             </p>
+          </div>
+
+          <div className="animate-in slide-in-from-bottom-2 duration-700 delay-600 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
+            <div className="flex items-center space-x-2 mb-2">
+              <span className="text-red-400">👑</span>
+              <h3 className="font-semibold">Contract Owner</h3>
+            </div>
+            <p className="text-sm font-bold text-red-400 font-mono">
+              {owner ? formatAddress(owner as string) : 'Loading...'}
+            </p>
+            {owner ? (
+              <div className="flex gap-1 mt-1">
+                <button
+                  className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                  onClick={() => owner && navigator.clipboard.writeText(owner as string)}
+                >
+                  Copy
+                </button>
+                {getAddressUrl(owner as string) && (
+                  <a className="text-xs text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(owner as string)}>
+                    View ↗
+                  </a>
+                )}
+              </div>
+            ) : null}
           </div>
         </div>
 
@@ -369,7 +394,7 @@ function App() {
               <button
                 onClick={handleFund}
                 disabled={isFunding || !fundAmount || !isContractDeployed}
-                className="text-gray-700 disabled:text-gray-400 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center justify-center gap-2 border border-gray-300"
+                className="text-gray-700 disabled:text-gray-300 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center justify-center gap-2 border border-gray-300"
               >
                 {isFunding && <span className="h-4 w-4 rounded-full border-2 border-white/60 border-t-transparent animate-spin" />}
                 {isFunding ? 'Funding…' : 'Fund'}
@@ -418,7 +443,7 @@ function App() {
             <button
               onClick={handleWithdraw}
               disabled={isWithdrawing}
-              className="bg-red-600 hover:bg-red-500 disabled:bg-gray-600 text-gray-700 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center gap-2 border border-gray-300"
+              className="disabled:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center gap-2 border border-gray-300"
             >
               {isWithdrawing && <span className="h-4 w-4 rounded-full border-2 border-white/60 border-t-transparent animate-spin" />}
               {isWithdrawing ? 'Withdrawing…' : 'Withdraw All Funds'}
