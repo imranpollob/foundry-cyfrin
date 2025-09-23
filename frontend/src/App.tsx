@@ -11,7 +11,6 @@ function App() {
   const [fundAmount, setFundAmount] = useState('')
   const [selectedChainId, setSelectedChainId] = useState<number | null>(null)
   const [toast, setToast] = useState<null | { type: 'success' | 'error' | 'info', message: string }>(null)
-  const [isDarkMode, setIsDarkMode] = useState(true) // Default to dark mode for sleek look
 
   const showToast = (type: 'success' | 'error' | 'info', message: string) => {
     setToast({ type, message })
@@ -191,14 +190,7 @@ function App() {
   }, [chainId, selectedChainId])
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white' : 'bg-gradient-to-br from-indigo-50 via-white to-blue-50 text-gray-900'}`}>
-      {/* Theme Toggle */}
-      <button
-        onClick={() => setIsDarkMode(!isDarkMode)}
-        className="fixed top-4 left-4 z-50 p-2 rounded-full bg-gray-800/80 hover:bg-gray-700/80 text-white backdrop-blur transition-all"
-      >
-        {isDarkMode ? '☀️' : '🌙'}
-      </button>
+    <div className="min-h-screen transition-colors duration-300 bg-gradient-to-br from-indigo-50 via-white to-blue-50 text-gray-900">
 
       {/* Toast */}
       {toast && (
@@ -215,24 +207,24 @@ function App() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">FundMe</h1>
-              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Decentralized crowdfunding platform</p>
+              <p className="text-sm text-gray-600">Decentralized crowdfunding platform</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className={`hidden md:flex items-center gap-2 rounded-full ${isDarkMode ? 'bg-gray-800/70 backdrop-blur' : 'bg-white/70 backdrop-blur'} px-3 py-1 border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+              <div className="hidden md:flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-3 py-1 border border-gray-200">
                 <span className={`h-2 w-2 rounded-full ${isConnected ? 'bg-emerald-500' : 'bg-gray-400'} animate-pulse`}></span>
-                <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{currentChain?.name || `Chain ${chainId}`}</span>
+                <span className="text-sm text-gray-700">{currentChain?.name || `Chain ${chainId}`}</span>
               </div>
               {isConnected ? (
                 <button
                   onClick={() => disconnect()}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md"
+                  className="bg-red-500 hover:bg-red-600 text-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md border border-gray-300"
                 >
                   Disconnect
                 </button>
               ) : (
                 <div className="flex flex-col items-end gap-2">
                   {!isMetaMaskAvailable && (
-                    <div className={`text-yellow-700 text-xs ${isDarkMode ? 'bg-yellow-900/50' : 'bg-yellow-50'} px-2 py-1 rounded`}>
+                    <div className="text-yellow-700 text-xs bg-yellow-50 px-2 py-1 rounded">
                       No Web3 wallet detected. <a className="underline" target="_blank" rel="noreferrer" href="https://metamask.io/download/">Install MetaMask</a>
                     </div>
                   )}
@@ -241,7 +233,7 @@ function App() {
                       key={connector.uid}
                       onClick={() => connect({ connector })}
                       disabled={isPending}
-                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md"
+                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md border border-gray-300"
                     >
                       {isPending ? 'Connecting…' : 'Connect Wallet'}
                     </button>
@@ -253,13 +245,13 @@ function App() {
         </header>
 
         {/* Wallet Connection */}
-        <div className={`animate-in slide-in-from-left-2 duration-700 ${isDarkMode ? 'bg-gray-800/80 backdrop-blur' : 'bg-white/80 backdrop-blur'} rounded-2xl border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} shadow-sm p-6 mb-6 hover:shadow-md transition-shadow`}>
+        <div className="animate-in slide-in-from-left-2 duration-700 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 mb-6 hover:shadow-md transition-shadow">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h2 className="text-lg font-semibold">Wallet</h2>
               {isConnected ? (
-                <div className={`mt-2 text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} flex items-center gap-2`}>
-                  <span className={`px-2 py-1 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'} font-mono`}>{formatAddress(address)}</span>
+                <div className="mt-2 text-sm text-gray-700 flex items-center gap-2">
+                  <span className="px-2 py-1 rounded bg-gray-100 font-mono">{formatAddress(address)}</span>
                   <button
                     className="text-blue-400 hover:text-blue-300 transition-colors"
                     onClick={() => address && navigator.clipboard.writeText(address)}
@@ -273,23 +265,23 @@ function App() {
                   )}
                 </div>
               ) : (
-                <p className={`mt-1 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Connect your wallet to get started.</p>
+                <p className="mt-1 text-sm text-gray-600">Connect your wallet to get started.</p>
               )}
             </div>
 
             {isConnected && (
               <div className="flex items-center gap-3">
                 {userBalance && (
-                  <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <div className="text-sm text-gray-700">
                     Balance: <span className="font-semibold">{formatBalance(userBalance.value.toString())} ETH</span>
                   </div>
                 )}
-                <div className={`hidden md:block h-6 w-px ${isDarkMode ? 'bg-gray-600' : 'bg-gray-200'}`} />
+                <div className="hidden md:block h-6 w-px bg-gray-200" />
                 <div className="flex items-center gap-2">
                   <select
                     value={selectedChainId ?? ''}
                     onChange={(e) => setSelectedChainId(Number(e.target.value))}
-                    className={`border ${isDarkMode ? 'border-gray-600 bg-gray-700 text-gray-200' : 'border-gray-300 bg-white text-gray-900'} rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500`}
+                    className="border border-gray-300 bg-white text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
                   >
                     {chains.map((c) => (
                       <option key={c.id} value={c.id}>{c.name}</option>
@@ -298,7 +290,7 @@ function App() {
                   <button
                     onClick={() => selectedChainId && switchChain({ chainId: selectedChainId })}
                     disabled={isSwitching || selectedChainId === chainId}
-                    className="bg-gray-900 hover:bg-gray-800 disabled:bg-gray-600 text-white px-3 py-2 rounded-lg text-sm transition-colors hover:shadow-md"
+                    className="bg-gray-900 hover:bg-gray-800 disabled:bg-gray-600 text-gray-700 px-3 py-2 rounded-lg text-sm transition-colors shadow-sm hover:shadow-md border border-gray-300"
                   >
                     {isSwitching ? 'Switching…' : 'Switch'}
                   </button>
@@ -310,7 +302,7 @@ function App() {
 
         {/* Contract Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div className={`animate-in slide-in-from-bottom-2 duration-700 delay-100 ${isDarkMode ? 'bg-gray-800/80 backdrop-blur' : 'bg-white/80 backdrop-blur'} rounded-2xl border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} shadow-sm p-6 hover:shadow-md transition-all hover:scale-105`}>
+          <div className="animate-in slide-in-from-bottom-2 duration-700 delay-100 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
             <div className="flex items-center space-x-2 mb-2">
               <span className="text-green-400">💰</span>
               <h3 className="font-semibold">Minimum USD</h3>
@@ -320,7 +312,7 @@ function App() {
             </p>
           </div>
 
-          <div className={`animate-in slide-in-from-bottom-2 duration-700 delay-200 ${isDarkMode ? 'bg-gray-800/80 backdrop-blur' : 'bg-white/80 backdrop-blur'} rounded-2xl border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} shadow-sm p-6 hover:shadow-md transition-all hover:scale-105`}>
+          <div className="animate-in slide-in-from-bottom-2 duration-700 delay-200 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
             <div className="flex items-center space-x-2 mb-2">
               <span className="text-blue-400">🏦</span>
               <h3 className="font-semibold">Contract Balance</h3>
@@ -330,7 +322,7 @@ function App() {
             </p>
           </div>
 
-          <div className={`animate-in slide-in-from-bottom-2 duration-700 delay-300 ${isDarkMode ? 'bg-gray-800/80 backdrop-blur' : 'bg-white/80 backdrop-blur'} rounded-2xl border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} shadow-sm p-6 hover:shadow-md transition-all hover:scale-105`}>
+          <div className="animate-in slide-in-from-bottom-2 duration-700 delay-300 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
             <div className="flex items-center space-x-2 mb-2">
               <span className="text-orange-400">👤</span>
               <h3 className="font-semibold">Your Contribution</h3>
@@ -340,7 +332,7 @@ function App() {
             </p>
           </div>
 
-          <div className={`animate-in slide-in-from-bottom-2 duration-700 delay-500 ${isDarkMode ? 'bg-gray-800/80 backdrop-blur' : 'bg-white/80 backdrop-blur'} rounded-2xl border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} shadow-sm p-6 hover:shadow-md transition-all hover:scale-105`}>
+          <div className="animate-in slide-in-from-bottom-2 duration-700 delay-500 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-all hover:scale-105">
             <div className="flex items-center space-x-2 mb-2">
               <span className="text-purple-400">�</span>
               <h3 className="font-semibold">Total Funders</h3>
@@ -353,12 +345,12 @@ function App() {
 
         {/* Funding Section */}
         {isConnected && (
-          <div className={`animate-in slide-in-from-right-2 duration-700 ${isDarkMode ? 'bg-gray-800/80 backdrop-blur' : 'bg-white/80 backdrop-blur'} rounded-2xl border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} shadow-sm p-6 mb-6 hover:shadow-md transition-shadow`}>
+          <div className="animate-in slide-in-from-right-2 duration-700 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 mb-6 hover:shadow-md transition-shadow">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
               <span className="text-green-400">🚀</span> Fund the Contract
             </h2>
             {!isContractDeployed && (
-              <div className={`text-red-400 text-sm ${isDarkMode ? 'bg-red-900/50' : 'bg-red-50'} p-3 rounded mb-4`}>
+              <div className="text-red-400 text-sm bg-red-50 p-3 rounded mb-4">
                 ⚠️ Contract not deployed on this network. Please deploy the contract first or switch to a supported network.
                 <br />
                 <strong>Current contract address:</strong> {contractAddress}
@@ -371,13 +363,13 @@ function App() {
                 placeholder="Amount in ETH"
                 value={fundAmount}
                 onChange={(e) => setFundAmount(e.target.value)}
-                className={`flex-1 px-4 py-2 border ${isDarkMode ? 'border-gray-600 bg-gray-700 text-gray-200' : 'border-gray-300 bg-white text-gray-900'} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                className="flex-1 px-4 py-2 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                 disabled={!isContractDeployed}
               />
               <button
                 onClick={handleFund}
                 disabled={isFunding || !fundAmount || !isContractDeployed}
-                className="bg-green-600 hover:bg-green-500 disabled:bg-gray-600 text-white px-6 py-2 rounded-lg transition-all hover:shadow-md hover:scale-105 flex items-center justify-center gap-2"
+                className="bg-green-600 hover:bg-green-500 disabled:bg-gray-600 text-gray-700 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center justify-center gap-2 border border-gray-300"
               >
                 {isFunding && <span className="h-4 w-4 rounded-full border-2 border-white/60 border-t-transparent animate-spin" />}
                 {isFunding ? 'Funding…' : 'Fund'}
@@ -388,23 +380,23 @@ function App() {
                 <button
                   key={amt}
                   onClick={() => setFundAmount(amt)}
-                  className={`px-3 py-1 text-sm rounded-full ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'} transition-colors hover:scale-105`}
+                  className="px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 transition-colors hover:scale-105 border border-gray-300"
                 >
                   {amt} ETH
                 </button>
               ))}
               <button
                 onClick={() => userBalance && setFundAmount((Number(formatEther(userBalance.value)) * 0.99).toFixed(4))}
-                className={`px-3 py-1 text-sm rounded-full ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'} transition-colors hover:scale-105`}
+                className="px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 transition-colors hover:scale-105 border border-gray-300"
               >
                 Max
               </button>
             </div>
-            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-2`}>
+            <p className="text-sm text-gray-600 mt-2">
               Minimum funding: ${MINIMUM_USD} USD worth of ETH
             </p>
             {fundTxHash && (
-              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-2`}>
+              <p className="text-sm text-gray-600 mt-2">
                 Tx: {getTxUrl(fundTxHash) ? (
                   <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getTxUrl(fundTxHash)}>
                     {formatAddress(fundTxHash)} ↗
@@ -419,23 +411,23 @@ function App() {
 
         {/* Owner Actions */}
         {isConnected && isOwner && (
-          <div className={`animate-in slide-in-from-left-2 duration-700 ${isDarkMode ? 'bg-gray-800/80 backdrop-blur' : 'bg-white/80 backdrop-blur'} rounded-2xl border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} shadow-sm p-6 mb-6 hover:shadow-md transition-shadow`}>
+          <div className="animate-in slide-in-from-left-2 duration-700 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 mb-6 hover:shadow-md transition-shadow">
             <h2 className="text-xl font-semibold mb-4 text-red-400 flex items-center gap-2">
               <span className="text-red-400">🔥</span> Owner Actions
             </h2>
             <button
               onClick={handleWithdraw}
               disabled={isWithdrawing}
-              className="bg-red-600 hover:bg-red-500 disabled:bg-gray-600 text-white px-6 py-2 rounded-lg transition-all hover:shadow-md hover:scale-105 flex items-center gap-2"
+              className="bg-red-600 hover:bg-red-500 disabled:bg-gray-600 text-gray-700 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center gap-2 border border-gray-300"
             >
               {isWithdrawing && <span className="h-4 w-4 rounded-full border-2 border-white/60 border-t-transparent animate-spin" />}
               {isWithdrawing ? 'Withdrawing…' : 'Withdraw All Funds'}
             </button>
-            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-2`}>
+            <p className="text-sm text-gray-600 mt-2">
               Only contract owner can withdraw funds
             </p>
             {withdrawTxHash && (
-              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-2`}>
+              <p className="text-sm text-gray-600 mt-2">
                 Tx: {getTxUrl(withdrawTxHash) ? (
                   <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getTxUrl(withdrawTxHash)}>
                     {formatAddress(withdrawTxHash)} ↗
@@ -449,18 +441,18 @@ function App() {
         )}
 
         {/* Network Information */}
-        <div className={`animate-in fade-in duration-700 delay-300 ${isDarkMode ? 'bg-gray-800/80 backdrop-blur' : 'bg-white/80 backdrop-blur'} rounded-2xl border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} shadow-sm p-6`}>
+        <div className="animate-in fade-in duration-700 delay-300 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <span className="text-blue-400">🌐</span> Network Information
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="font-semibold">Current Network:</p>
-              <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{currentChain?.name || 'Unknown'} (Chain ID: {chainId})</p>
+              <p className="text-gray-600">{currentChain?.name || 'Unknown'} (Chain ID: {chainId})</p>
             </div>
             <div>
               <p className="font-semibold">Contract Address:</p>
-              <div className={`flex items-center gap-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} font-mono text-sm`}>
+              <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
                 <span>{contractAddress}</span>
                 <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
                 {getAddressUrl(contractAddress) && (
@@ -470,15 +462,15 @@ function App() {
                 )}
               </div>
               {!isContractDeployed && (
-                <p className={`text-red-400 text-xs mt-1 ${isDarkMode ? 'text-red-300' : ''}`}>
+                <p className="text-red-400 text-xs mt-1">
                   Contract not deployed - update contracts.ts with deployed address
                 </p>
               )}
             </div>
           </div>
           {!isContractDeployed && (
-            <div className={`mt-4 p-3 ${isDarkMode ? 'bg-blue-900/50' : 'bg-blue-50'} rounded`}>
-              <p className={`text-blue-400 text-sm ${isDarkMode ? 'text-blue-300' : ''}`}>
+            <div className="mt-4 p-3 bg-blue-50 rounded">
+              <p className="text-blue-400 text-sm">
                 <strong>To deploy the contract:</strong><br />
                 <strong>For local testing:</strong> Start Anvil (`anvil`) in terminal, then run `npm run deploy:local`<br />
                 <strong>For Sepolia testnet:</strong> Set environment variables and run `npm run deploy:sepolia`<br />

@@ -39,7 +39,7 @@ forge build
 ### 3. Start Local Blockchain
 ```bash
 # Start Anvil (local Ethereum node)
-make anvil
+anvil
 ```
 This will start a local blockchain at `http://127.0.0.1:8545` with 10 pre-funded accounts.
 
