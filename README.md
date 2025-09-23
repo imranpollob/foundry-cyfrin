@@ -10,6 +10,7 @@ A decentralized crowdfunding smart contract built with Foundry, enabling users t
 - **Price Conversion Library**: Modular price conversion utilities using Chainlink oracles
 - **Comprehensive Testing**: Full test coverage with Foundry's testing framework
 - **Multi-Network Deployment**: Configurable deployment scripts for different networks
+- **React Frontend**: Modern web interface for interacting with the smart contract
 
 ## 📁 Project Structure
 
@@ -18,6 +19,17 @@ foundry-fund-me/
 ├── foundry.toml                 # Foundry configuration
 ├── Makefile                     # Build and test automation
 ├── script/                      # Deployment & interaction scripts
+├── src/                         # Smart contract source code
+├── test/                        # Test files
+├── frontend/                    # React frontend application
+│   ├── src/
+│   │   ├── contracts.ts         # Contract ABI and addresses
+│   │   ├── wagmi.ts            # Web3 configuration
+│   │   ├── App.tsx             # Main React component
+│   │   └── ...
+│   ├── package.json
+│   └── README.md
+└── README.md
 │   ├── DeployFundMe.s.sol       # Main deployment script
 │   ├── HelperConfig.sol         # Network configuration helper
 │   └── Interactions.s.sol       # Contract interaction utilities
@@ -105,6 +117,40 @@ forge script script/DeployFundMe.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key 
 
 # Mainnet
 forge script script/DeployFundMe.s.sol --rpc-url $MAINNET_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify
+```
+
+## 🌐 Frontend
+
+A modern React application for interacting with the FundMe smart contract.
+
+### Features
+- **Wallet Connection**: Connect MetaMask or other Web3 wallets
+- **Fund Contract**: Send ETH with USD minimum validation
+- **Real-time Data**: View contract balance and your contributions
+- **Owner Actions**: Withdraw funds (owner only)
+- **Multi-Network**: Support for Ethereum, Sepolia, and Polygon Amoy
+
+### Setup
+1. **Install frontend dependencies**
+   ```bash
+   npm run install:frontend
+   ```
+
+2. **Start development server**
+   ```bash
+   npm run dev:frontend
+   ```
+
+3. **Open** [http://localhost:5173](http://localhost:5173)
+
+### Update Contract Addresses
+Edit `frontend/src/contracts.ts` with your deployed contract addresses:
+```typescript
+export const contractAddresses = {
+  11155111: "0xYourSepoliaAddress",
+  80002: "0xYourAmoyAddress",
+  31337: "0xYourLocalAddress"
+}
 ```
 
 ## 🔧 Development
