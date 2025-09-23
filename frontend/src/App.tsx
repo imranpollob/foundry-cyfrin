@@ -316,7 +316,7 @@ function App() {
               <h3 className="font-semibold">Minimum USD</h3>
             </div>
             <p className="text-2xl font-bold text-green-400">
-              ${minimumUsd ? formatEther(minimumUsd) : MINIMUM_USD}
+              ${minimumUsd ? formatEther(minimumUsd as bigint) : MINIMUM_USD}
             </p>
           </div>
 

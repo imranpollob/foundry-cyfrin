@@ -7,6 +7,7 @@
     "dev:frontend": "cd frontend && npm run dev",
     "build:frontend": "cd frontend && npm run build",
     "start:frontend": "cd frontend && npm run start",
+    "extract:abi": "node -e \"const fs = require('fs'); const data = JSON.parse(fs.readFileSync('out/FundMe.sol/FundMe.json', 'utf8')); fs.writeFileSync('frontend/src/FundMeAbi.json', JSON.stringify(data.abi, null, 2)); console.log('ABI extracted to frontend/src/FundMeAbi.json');\"",
     "test": "forge test",
     "deploy:local": "forge script script/DeployFundMe.s.sol --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast",
     "deploy:sepolia": "forge script script/DeployFundMe.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY"
