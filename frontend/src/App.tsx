@@ -345,65 +345,118 @@ function App() {
 
         {/* Funding Section */}
         {isConnected && (
-          <div className="animate-in slide-in-from-right-2 duration-700 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 mb-6 hover:shadow-md transition-shadow">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <span className="text-green-400">🚀</span> Fund the Contract
-            </h2>
-            {!isContractDeployed && (
-              <div className="text-red-400 text-sm bg-red-50 p-3 rounded mb-4">
-                ⚠️ Contract not deployed on this network. Please deploy the contract first or switch to a supported network.
-              </div>
-            )}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="number"
-                step="0.01"
-                placeholder="Amount in ETH"
-                value={fundAmount}
-                onChange={(e) => setFundAmount(e.target.value)}
-                className="flex-1 px-4 py-2 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                disabled={!isContractDeployed}
-              />
-              <button
-                onClick={handleFund}
-                disabled={isFunding || !fundAmount || !isContractDeployed}
-                className="text-gray-700 disabled:text-gray-300 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center justify-center gap-2 border border-gray-300"
-              >
-                {isFunding && <span className="h-4 w-4 rounded-full border-2 border-white/60 border-t-transparent animate-spin" />}
-                {isFunding ? 'Funding…' : 'Fund'}
-              </button>
-            </div>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {['0.01', '0.05', '0.1', '0.5', '1'].map((amt) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
+            <div className="animate-in slide-in-from-right-2 duration-700 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 mb-6 hover:shadow-md transition-shadow">
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <span className="text-green-400">🚀</span> Fund the Contract
+              </h2>
+              {!isContractDeployed && (
+                <div className="text-red-400 text-sm bg-red-50 p-3 rounded mb-4">
+                  ⚠️ Contract not deployed on this network. Please deploy the contract first or switch to a supported network.
+                </div>
+              )}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="number"
+                  step="0.01"
+                  placeholder="Amount in ETH"
+                  value={fundAmount}
+                  onChange={(e) => setFundAmount(e.target.value)}
+                  className="flex-1 px-4 py-2 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  disabled={!isContractDeployed}
+                />
                 <button
-                  key={amt}
-                  onClick={() => setFundAmount(amt)}
+                  onClick={handleFund}
+                  disabled={isFunding || !fundAmount || !isContractDeployed}
+                  className="text-gray-700 disabled:text-gray-300 px-6 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-105 flex items-center justify-center gap-2 border border-gray-300"
+                >
+                  {isFunding && <span className="h-4 w-4 rounded-full border-2 border-white/60 border-t-transparent animate-spin" />}
+                  {isFunding ? 'Funding…' : 'Fund'}
+                </button>
+              </div>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {['0.01', '0.05', '0.1', '0.5', '1'].map((amt) => (
+                  <button
+                    key={amt}
+                    onClick={() => setFundAmount(amt)}
+                    className="px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 transition-colors hover:scale-105 border border-gray-300"
+                  >
+                    {amt} ETH
+                  </button>
+                ))}
+                <button
+                  onClick={() => userBalance && setFundAmount((Number(formatEther(userBalance.value)) * 0.99).toFixed(4))}
                   className="px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 transition-colors hover:scale-105 border border-gray-300"
                 >
-                  {amt} ETH
+                  Max
                 </button>
-              ))}
-              <button
-                onClick={() => userBalance && setFundAmount((Number(formatEther(userBalance.value)) * 0.99).toFixed(4))}
-                className="px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 transition-colors hover:scale-105 border border-gray-300"
-              >
-                Max
-              </button>
-            </div>
-            <p className="text-sm text-gray-600 mt-2">
-              Minimum funding: ${MINIMUM_USD} USD worth of ETH
-            </p>
-            {fundTxHash && (
+              </div>
               <p className="text-sm text-gray-600 mt-2">
-                Tx: {getTxUrl(fundTxHash) ? (
-                  <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getTxUrl(fundTxHash)}>
-                    {formatAddress(fundTxHash)} ↗
-                  </a>
-                ) : (
-                  <span className="font-mono">{formatAddress(fundTxHash)}</span>
-                )}
+                Minimum funding: ${MINIMUM_USD} USD worth of ETH
               </p>
-            )}
+              {fundTxHash && (
+                <p className="text-sm text-gray-600 mt-2">
+                  Tx: {getTxUrl(fundTxHash) ? (
+                    <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getTxUrl(fundTxHash)}>
+                      {formatAddress(fundTxHash)} ↗
+                    </a>
+                  ) : (
+                    <span className="font-mono">{formatAddress(fundTxHash)}</span>
+                  )}
+                </p>
+              )}
+            </div>
+
+            <div className="animate-in fade-in duration-700 delay-300 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6">
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <span className="text-blue-400">🌐</span> Network Information
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div>
+                  <p className="font-semibold">Current Network:</p>
+                  <p className="text-gray-600">{currentChain?.name || 'Unknown'} (Chain ID: {chainId})</p>
+                </div>
+                <div>
+                  <p className="font-semibold">Contract Address:</p>
+                  <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
+                    <span>{formatAddress(contractAddress)}</span>
+                    <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
+                    {getAddressUrl(contractAddress) && (
+                      <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(contractAddress)}>
+                        View ↗
+                      </a>
+                    )}
+                  </div>
+                  {!isContractDeployed && (
+                    <p className="text-red-400 text-xs mt-1">
+                      Contract not deployed - update contracts.ts with deployed address
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <p className="font-semibold">Current Owner:</p>
+                  <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
+                    <span>{owner ? formatAddress(owner as string) : 'Loading...'}</span>
+                    <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
+                    {getAddressUrl(contractAddress) && (
+                      <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(contractAddress)}>
+                        View ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+              {!isContractDeployed && (
+                <div className="mt-4 p-3 bg-blue-50 rounded">
+                  <p className="text-blue-400 text-sm">
+                    <strong>To deploy the contract:</strong><br />
+                    <strong>For local testing:</strong> Start Anvil (`anvil`) in terminal, then run `npm run deploy:local`<br />
+                    <strong>For Sepolia testnet:</strong> Set environment variables and run `npm run deploy:sepolia`<br />
+                    Then update the contract address in `src/contracts.ts`
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -434,60 +487,6 @@ function App() {
                   <span className="font-mono">{formatAddress(withdrawTxHash)}</span>
                 )}
               </p>
-            )}
-          </div>
-        )}
-
-        {/* Network Information */}
-        {isConnected && (
-          <div className="animate-in fade-in duration-700 delay-300 bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <span className="text-blue-400">🌐</span> Network Information
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <p className="font-semibold">Current Network:</p>
-                <p className="text-gray-600">{currentChain?.name || 'Unknown'} (Chain ID: {chainId})</p>
-              </div>
-              <div>
-                <p className="font-semibold">Contract Address:</p>
-                <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
-                  <span>{formatAddress(contractAddress)}</span>
-                  <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
-                  {getAddressUrl(contractAddress) && (
-                    <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(contractAddress)}>
-                      View ↗
-                    </a>
-                  )}
-                </div>
-                {!isContractDeployed && (
-                  <p className="text-red-400 text-xs mt-1">
-                    Contract not deployed - update contracts.ts with deployed address
-                  </p>
-                )}
-              </div>
-              <div>
-                <p className="font-semibold">Current Owner:</p>
-                <div className="flex items-center gap-2 text-gray-600 font-mono text-sm">
-                  <span>{owner ? formatAddress(owner as string) : 'Loading...'}</span>
-                  <button className="text-blue-400 hover:text-blue-300 transition-colors" onClick={() => navigator.clipboard.writeText(contractAddress)}>Copy</button>
-                  {getAddressUrl(contractAddress) && (
-                    <a className="text-blue-400 hover:text-blue-300 transition-colors" target="_blank" rel="noreferrer" href={getAddressUrl(contractAddress)}>
-                      View ↗
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-            {!isContractDeployed && (
-              <div className="mt-4 p-3 bg-blue-50 rounded">
-                <p className="text-blue-400 text-sm">
-                  <strong>To deploy the contract:</strong><br />
-                  <strong>For local testing:</strong> Start Anvil (`anvil`) in terminal, then run `npm run deploy:local`<br />
-                  <strong>For Sepolia testnet:</strong> Set environment variables and run `npm run deploy:sepolia`<br />
-                  Then update the contract address in `src/contracts.ts`
-                </p>
-              </div>
             )}
           </div>
         )}
