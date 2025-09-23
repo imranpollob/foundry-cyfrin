@@ -67,7 +67,7 @@ contract FundMe {
         // in solidity it's not possible to reset a mapping
         // it's one of the main reason to have an array to track the size of mapping
         // ** mappings can't be in memory
-        for (uint i; i < s_funders.length; i++) {
+        for (uint256 i; i < s_funders.length; i++) {
             address funder = s_funders[i];
             s_funderToAmountFunded[funder] = 0;
         }
@@ -76,9 +76,7 @@ contract FundMe {
         s_funders = new address[](0);
 
         // (bool callSuccess, bytes memory dataReturned)
-        (bool callSuccess, ) = payable(i_owner).call{
-            value: address(this).balance
-        }("");
+        (bool callSuccess,) = payable(i_owner).call{value: address(this).balance}("");
         require(callSuccess, "Call failed");
     }
 
@@ -86,10 +84,10 @@ contract FundMe {
     // gas: 84,594 after using in memory funders
     // gas: 84,448 after using fundersLength variable
     function withdrawCheaper() public onlyOwner {
-        uint fundersLength = s_funders.length;
+        uint256 fundersLength = s_funders.length;
         address[] memory funders = s_funders;
 
-        for (uint i; i < fundersLength; i++) {
+        for (uint256 i; i < fundersLength; i++) {
             address funder = funders[i];
             s_funderToAmountFunded[funder] = 0;
         }
@@ -120,5 +118,9 @@ contract FundMe {
 
     function getFunderToAmountFunded(address funderAddress) public view returns (uint256) {
         return s_funderToAmountFunded[funderAddress];
+    }
+
+    function getTotalFunders() public view returns (uint256) {
+        return s_funders.length;
     }
 }

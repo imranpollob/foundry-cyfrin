@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {Script, console} from "forge-std/Script.sol";
-import {FunWithStorage} from "./../../src/FunWithStorage.sol";
+import {FunWithStorage} from "./../src/FunWithStorage.sol";
 
 contract DeployFunWithStorage is Script {
     // forge script script/fund-me/DeployFunWithStorage.s.sol
